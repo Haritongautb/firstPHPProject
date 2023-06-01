@@ -1,0 +1,27 @@
+
+@import url("global.css");
+
+
+.content-header{
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.content > .content-body{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-block{
+    width: 400px;
+    height: 400px;
+}
+
+.forms{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
