@@ -22,12 +22,7 @@
         <button type="submit" class="btn btn-primary">Log in</button>
     </form>
 
-    <!-- При успешной авторизации отправить на страницу user.html -->
-    <!-- Там сделать на странице user.html стянуть информаицю о нем в отдельный блоок на странице-->
     <?php
-        // что это значит? 
-        // инициализация сессии, глобальный объект, который хранит в себе данные, и в последующих открытиях других php файлов можно найти данные из предыдущих скриптов
-        // что-то типа localStorage
         session_start();
 
         $server_name = "127.0.0.1";
@@ -53,8 +48,15 @@
 
         $sql = "SELECT * FROM users  WHERE email = '$email'";
         $result = $connection->query($sql); 
+        $admin = mysqli_fetch_assoc(mysqli_query($connection, "SELECT email, password FROM admin"));
+        if($admin['email'] == $email && $admin['password'] == $password){
+            $connection->close();
+            header("Location: http://logtest/server/admin.php");
+            exit();
+        }
 
         if ($result->num_rows == 1) {
+
             $row = $result->fetch_assoc();
             if ($password === $row['password']) {
 
@@ -78,7 +80,6 @@
             exit();
         }
 
-        $connection->close();
     ?>
     
 </body>
