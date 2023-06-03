@@ -31,7 +31,7 @@
         $server_name = "127.0.0.1";
         $user_name = "root";
         $password = "";
-        $db_name = "test";
+        $db_name = "test1";
     
         $connection = new mysqli($server_name, $user_name, $password, $db_name);
         if($connection->connect_error){

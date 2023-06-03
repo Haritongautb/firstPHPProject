@@ -22,7 +22,7 @@
                     $servername = "127.0.0.1";
                     $username = "root";
                     $password = "";
-                    $c="test";
+                    $c="test1";
     
                     $conn =  new mysqli($servername, $username, $password,$c);
                     if ($conn->connect_error) {
@@ -56,7 +56,7 @@
                 $servername = "127.0.0.1";
                 $username = "root";
                 $password = "";
-                $c="test";
+                $c="test1";
 
                 $conn =  new mysqli($servername, $username, $password,$c);
                 if ($conn->connect_error) {
@@ -112,7 +112,6 @@
                             }
                             $d=$d2;
                             
-                            
                             for ($i=$idmin;$i!=$id+1;$i++){
                                 if(mysqli_fetch_assoc(mysqli_query($conn,"SELECT DISTINCT var FROM curent where name like('$c')and id=$i"))!=null){
                                     $v[]=mysqli_fetch_assoc(mysqli_query($conn,"SELECT DISTINCT var FROM curent where name like('$c')and id=$i"));
@@ -158,104 +157,9 @@
 
     </div>
 
-    <script>
-
-
-        var ctx = document.getElementById('myChart').getContext('2d');
-        let currenciesData = [];
-        let currentExchangeValue = 0;
-        let currentExchangeCurrency = "";
-        const currency = document.querySelector(".currency");
-        const pln = document.querySelector(".pln");
-        const exchanged = document.getElementById("exchanged");
-        const result = document.querySelector(".result");
-        const selectBlock = document.getElementById("select-currency");
-        selectBlock.innerHTML = "";
-        getCurrencies();
-
-        selectBlock.addEventListener("change", event => {
-            const target = event.target;
-            currenciesData.map(item => {
-                if(item.name === target.value){
-                    currentExchangeValue = item.var;
-                    currentExchangeCurrency = item.name
-                    changeCurrency(currentExchangeCurrency, currentExchangeValue);
-                }
-            })
-        })
-        
-        var data = {
-            labels: <?php echo json_encode($d);?>,
-            datasets: [{
-                label: 'Currencies',
-                data: <?php echo json_encode($v);?>,
-                backgroundColor: 'rgba(0, 123, 255, 0.5)', 
-                borderColor: 'rgba(0, 123, 255, 1)', 
-                borderWidth: 1 
-            }]
-        };
-
-        var myChart = new Chart(ctx, {
-            type: 'line', 
-            data: data,
-            options: {
-                responsive: true, 
-                scales: {
-                y: {
-                    beginAtZero: true 
-                }
-                }
-            }
-        });
-
-        function getCurrencies() {
-            request("http://logtest/server/getCurrentValues.php", "GET")
-            .then(res => {
-                currenciesData = res;
-                currenciesData.map((item, index) => {
-                    selectBlock.innerHTML += createOption(item, index);
-                });
-                currentExchangeValue = currenciesData[0]["var"];
-                currentExchangeCurrency = currenciesData[0]["name"]
-                changeCurrency(currentExchangeCurrency, currentExchangeValue);
-            })
-        }
-
-        async function request(url, method) {
-            const res = await fetch(url, {
-                method
-            })
-            return await res.json();
-        }
-
-        function createOption(data, index){
-            return `
-                <option value=${data.name} id=${index}>${data.name}</option>
-            `
-        }
-
-        function changeCurrency(curr, zl) {
-            currency.innerHTML = `1 ${curr} = `;
-            pln.innerHTML = `${zl} zł`;
-        }
-
-        exchanged.addEventListener("input", event => {
-            const target = event.target;
-
-            if(+target.value < 0){
-                result.innerHTML = `0`;
-                return;
-            }
-            if(target === "" || target == null){
-                result.innerHTML = `0`;
-                return;
-            }
-            result.innerHTML = `${target.value} zł = ${Math.floor(target.value / currentExchangeValue)} ${currentExchangeCurrency}`;
-        })
-
-
-
-
+    <input type="hidden" value="<?php var_dump($d); echo json_encode($d);?>" id="label-data">
+    <input type="hidden" value="<?php echo json_encode($v);?>" id="data-2">
+    <script src="../clients/script.js">
     </script>
 
 

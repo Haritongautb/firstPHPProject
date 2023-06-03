@@ -49,7 +49,7 @@
             $server_name = "127.0.0.1";
             $user_name = "root";
             $password = "";
-            $db_name = "test";
+            $db_name = "test1";
 
             try{
                 $connection = new mysqli($server_name, $user_name, $password, $db_name);
@@ -105,14 +105,13 @@
         }
 
         function buildUsersCard(data) {
-            const {login, email, id, currency, currency_q, stock_name, stock_q} = data;
+            const {login, email, id, currency, currency_q} = data;
             return `
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">${id}</h5>
                     <h5 class="card-title">${login}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">currency - ${currency ? currency : "none"} ${currency_q ? currency_q : "none"}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">stock - ${stock_name ? stock_name : "none"} ${stock_q ? stock_q : "none"}</h6>
                 </div>
             </div>
             `

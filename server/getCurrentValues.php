@@ -5,7 +5,7 @@
     $servername = "127.0.0.1";
     $username = "root";
     $password = "";
-    $c="test";
+    $c="test1";
 
     $conn =  new mysqli($servername, $username, $password,$c);
     if ($conn->connect_error) {
