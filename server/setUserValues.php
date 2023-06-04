@@ -79,8 +79,6 @@ $current = new Current();
             if (null !== $currency && null !== $currency_q) {
                 $user->updateUserCurrency($currency, $currency_q, $history_log);
             }
-
-//            var_dump(json_encode($d));
             ?>
             <div class="grafik-block">
                 <canvas id="myChart"></canvas>
