@@ -1,30 +1,13 @@
-<?php 
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json; charset=utf-8');
+<?php
 
-    $server_name = "127.0.0.1";
-    $user_name = "root";
-    $password = "";
-    $db_name = "test1";
+use src\User;
 
-    try{
-        $connection = new mysqli($server_name, $user_name, $password, $db_name);
-        if($connection->connect_error){
-            echo("Database connection error: ". $connection->connect_error);
-        }
-    } catch(Exception $e){
-        var_dump($e);
-    }
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json; charset=utf-8');
 
-    $id = mysqli_fetch_assoc(mysqli_query($connection, "SELECT max(id) FROM users"));
-    $id = $id['max(id)'];
+session_start();
 
-    for($i = 1; $i != ($id + 1); $i++){
-        $c = mysqli_fetch_assoc(mysqli_query($connection, "SELECT * FROM users WHERE id='$i'"));
-        if($c != null){
-            $b[] = mysqli_fetch_assoc(mysqli_query($connection, "SELECT * FROM users WHERE id='$i'"));
-        }
-    }
-    echo json_encode($b);
+require_once __DIR__ . '/include.php';
 
-?>
+$user = new User();
+echo json_encode($user->findUserBy($_SESSION['user_id'] ?? 0));
